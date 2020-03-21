@@ -32,7 +32,8 @@ def states():
     new_df = pd.DataFrame(
         columns=['Sno', 'StateOrUt', 'TotalConfirmedCasesInIndia', 'TotalConfirmedCasesForeignNational', 'Cured',
                  'Death'], data=list_state)
-    return new_df.to_json(orient='table')
+    dfList = new_df.values.tolist()    
+    return jsonify(dfList)
 
 @app.route("/countrystatus", methods=["GET"])
 def overall():
