@@ -14,7 +14,7 @@ import json
 
 # set the project root directory as the static folder, you can set others.
 app = Flask(__name__, static_url_path='')
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route("/statesstatus", methods=["GET"])
 def states():
@@ -65,7 +65,7 @@ def overall():
 # A welcome message to test our server
 @app.route('/')
 def root():
-    return "<h1>Welcome to our India COVID Stats server !!</h1>"
+    return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(threaded=True, port=5000, debug=True)
