@@ -57,8 +57,7 @@ def overall():
                 recovered = re.sub('[^0-9,.]', '', row[3])
                 death = re.sub('[^0-9,.]', '', row[4])
     overall_status= {'confirmed':confirmed,'recovered':recovered,'death':death}
-    overall_status_json = json.dumps(overall_status)
-    return jsonify(overall_status_json)
+    return jsonify(overall_status)
 
 # A welcome message to test our server
 @app.route('/')
