@@ -3,7 +3,8 @@ Author: praveenJoshi
 Modified: Friday, 20th March 2020 2:44:13 pm [praveenJoshi]
 """
 
-from flask import Flask, jsonify, g
+from flask import Flask, request, render_template, jsonify, g
+from flask_cors import CORS
 from bs4 import BeautifulSoup
 import requests
 from datetime import datetime, timedelta
@@ -11,7 +12,9 @@ import pandas as pd
 import re
 import json
 
-app = Flask(__name__)
+# set the project root directory as the static folder, you can set others.
+app = Flask(__name__, static_url_path='')
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 @app.route("/statesstatus", methods=["GET"])
 def states():
@@ -33,7 +36,7 @@ def states():
         columns=['Sno', 'StateOrUt', 'TotalConfirmedCasesInIndia', 'TotalConfirmedCasesForeignNational', 'Cured',
                  'Death'], data=list_state)
     dfList = new_df.values.tolist()    
-    return jsonify(dfList)
+    return jsonify(new_df.to_dict('records'))
 
 @app.route("/countrystatus", methods=["GET"])
 def overall():
@@ -61,8 +64,8 @@ def overall():
 
 # A welcome message to test our server
 @app.route('/')
-def index():
-    return "<h1>Welcome to our server !!</h1>"
+def root():
+    return "<h1>Welcome to our India COVID Stats server !!</h1>"
 
 if __name__ == "__main__":
-    app.run(threaded=True, port=5000)
+    app.run(threaded=True, port=5000, debug=True)
